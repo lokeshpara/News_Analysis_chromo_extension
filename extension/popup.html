@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>News Analyzer</title>
+  <link rel="stylesheet" href="css/popup.css">
+</head>
+<body>
+  <div class="container">
+    <h1>News Analyzer</h1>
+    
+    <div class="input-section">
+      <textarea id="promptInput" placeholder="Enter your prompt (e.g., 'Analyze this news article: first summarize, then extract headlines, and finally determine the sentiment')"></textarea>
+      <button id="analyzeBtn">Analyze</button>
+    </div>
+    
+    <div class="results-section">
+      <div class="loader" id="loader" style="display: none;">Processing...</div>
+      
+      <div class="result-container" id="summaryContainer" style="display: none;">
+        <h2>Summary</h2>
+        <div id="summaryResult"></div>
+      </div>
+      
+      <div class="result-container" id="headlinesContainer" style="display: none;">
+        <h2>Headlines</h2>
+        <div id="headlinesResult"></div>
+      </div>
+      
+      <div class="result-container" id="sentimentContainer" style="display: none;">
+        <h2>Sentiment Analysis</h2>
+        <div id="sentimentResult"></div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="js/popup.js"></script>
+</body>
+</html> 

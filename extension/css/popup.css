@@ -1,0 +1,93 @@
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+}
+
+.container {
+  width: 450px;
+  min-height: 300px;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: #333;
+  font-size: 24px;
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+h2 {
+  font-size: 18px;
+  color: #444;
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.input-section {
+  margin-bottom: 20px;
+}
+
+textarea {
+  width: 100%;
+  height: 80px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: none;
+  font-family: inherit;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 10px;
+  float: right;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #2a75f3;
+}
+
+.loader {
+  text-align: center;
+  padding: 10px;
+  color: #666;
+}
+
+.result-container {
+  margin-top: 15px;
+  padding: 15px;
+  background-color: #f9f9f9;
+  border-radius: 4px;
+  border-left: 4px solid #4285f4;
+}
+
+#summaryResult, #headlinesResult, #sentimentResult {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+#sentimentResult.positive {
+  color: #0f9d58;
+}
+
+#sentimentResult.negative {
+  color: #db4437;
+}
+
+#sentimentResult.neutral {
+  color: #f4b400;
+} 

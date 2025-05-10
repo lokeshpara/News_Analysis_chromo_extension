@@ -1,0 +1,90 @@
+User prompt (if user prompt is "analysis the title and summary of current page and tell its sentiment" ) --> LLM use query 1 and  it has list of tool mentioned in llm_services.py line 117-124  it check call correct method it calls summarize_article() with input of current page in text and gemini with analysis it and send output of summary of text in detail --> LLM sees user prompt and query 1 and result of tool used summarize_article() and send second query 2 to the tool use  extract_headlines() with input of the summarize_article() output, using gemini extract the headlines of the summary and send the output of summary headline --> llm see the  user prompt and query 1 and result of tool used summarize_article(), query 2 and result of the extract_headlines(), send query 3  using the tool analyze_sentiment() input as the both summarize_article() and extract_headlines output as input , process using the gemini and send output of sentiment postive , negative, or netural 
+
+
+
+build a chrome extension that as to fetch news and relevant article about the news this functionality in the server side which runs in the localhost for this it need build to tool or functional that perform this task. 
+for now only build the front end and back end basic structure to connect with font end 
+
+
+1 **User Input Processing**:
+   - User enters a prompt in the Chrome extension (e.g., "Analyze the title and summary of current page and tell its sentiment")
+   - The extension captures the current page's URL, title, and content
+
+2 using this prompt for llm 
+current_query = 
+system_prompt = """
+	you are a news agent. Respond with EXACTLY ONE of these formats:
+
+	FUNCTION_CALL: python_function_name|input
+
+	FINAL_ANSWER: [result]
+
+	where python_function_name is one of the following:
+
+		extract_headlines(text) - It takes a news article text as input and returns 					  the extracted headline.
+
+		summarize_article(text) - It takes a full news article as input and returns 						  a summary.
+
+		analyze_sentiment(text) - It takes a news article or description as input 					and returns the sentiment (positive, neutral, or 					negative)."""
+
+	current_query= user_prompt
+
+	
+while iteration < max_iterations:
+    print(f"\n--- Iteration {iteration + 1} ---")
+    if last_response == None:
+        current_query = query
+    else:
+        current_query = current_query + "\n\n" + " ".join(iteration_response)
+        current_query = current_query + "  What should I do next?"
+
+    # Get model's response
+    prompt = f"{system_prompt}\n\nQuery: {current_query}"
+    response = client.models.generate_content(
+        model="gemini-2.0-flash",
+        contents=prompt
+    )
+
+
+iteration_response store in list and each response one of another to LLM and LLM tell which function need to call next 
+
+2. **Query Chain Process**:
+   - **Query 1**: The extension sends the user prompt and page content to the server
+     - The server calls `summarize_article()` function with the page content
+     - Gemini AI processes the content and returns a detailed summary
+     - The summary is sent back to LLM like this iteration_response = "In the 1 iteration you called `summarize_article() with user prompt and page content parameters, and the function returned ["summary of the article"]"
+
+   - **Query 2**: The extension sends the user prompt and summary to the server
+     - The server calls `extract_headlines()` function with the summary
+     - Gemini AI extracts key headlines from the summary
+     - The headlines are sent back to LLM like this iteration_response = "In the 2 iteration you called `extract_headlines() with `summarize_article() return output parameters, and the function returned ["extract headlines"]"
+
+   - **Query 3**: The extension sends the user prompt, summary, and headlines to the server
+     - The server calls `analyze_sentiment()` function with both the summary and headlines
+     - Gemini AI analyzes the sentiment and classifies it as positive, negative, or neutral
+     - The sentiment analysis is sent back to LLM like this iteration_response = "In the 3 iteration you called `analyze_sentiment() with `summarize_article() and `extract_headlines() return output parameters, and the function returned anyone ["Positive","negative","neutral"].
+   
+
+3. **Result Presentation**:
+   - All results (summary, headlines, and sentiment) are displayed in the extension popup 
+
+
+
+this
+
+--- Iteration 1 ---
+LLM Response: FUNCTION_CALL: summarize_article|[page content]
+  Result: [summary text...]
+['In the 1 iteration you called summarize_article with user prompt and page content parameters, and the function returned [summary text...]']
+
+--- Iteration 2 ---
+LLM Response: FUNCTION_CALL: extract_headlines|[summary]
+  Result: ['headline1', 'headline2', 'headline3']
+['In the 1 iteration you called summarize_article with user prompt and page content parameters, and the function returned [summary text...]', 'In the 2 iteration you called extract_headlines with `summarize_article()` return output parameters, and the function returned ['headline1', 'headline2', 'headline3'].']
+
+--- Iteration 3 ---
+LLM Response: FUNCTION_CALL: analyze_sentiment|[summary and headlines]
+  Result: Positive
+['In the 1 iteration you called summarize_article with user prompt and page content parameters, and the function returned [summary text...]', 'In the 2 iteration you called extract_headlines with `summarize_article()` return output parameters, and the function returned ['headline1', 'headline2', 'headline3'].', 'In the 3 iteration you called analyze_sentiment with `summarize_article()` and `extract_headlines()` return output parameters, and the function returned Positive.']
+
+=== Agent Execution Complete ===
